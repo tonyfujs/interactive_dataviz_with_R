@@ -1,0 +1,62 @@
+---
+title: "Quick and Dirty Interactive Report"
+author: "AEA 2015"
+date: "November 12, 2015"
+output: 
+  html_document: 
+    highlight: pygments
+    number_sections: yes
+    toc: yes
+---
+
+---------------
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
+library(twitteR)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(lubridate)
+```
+
+# AEA 2015 on Twitter
+
+## eval15 hashtag trend 
+
+```{r}
+# Load data ---------------------------------------------------------------
+load('../data/clean_data.Rdata')
+
+# Analysis ----------------------------------------------------------------
+library(dygraphs)
+dygraph(series, main = "#eval15 tweeter trend") %>% 
+  dyRangeSelector(dateWindow = c("2015-11-09", "2015-11-11")) %>%
+  dyOptions(stackedGraph = TRUE) %>%
+  dyAxis("y", label = "Number of tweets per hour")
+```
+
+Noboday beats MQP!!    
+
+
+## Where are you tweeting from?
+```{r}
+library(leaflet)
+df %>%
+  filter(!is.na(longitude)) %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircleMarkers()
+```
+    
+    
+
+# Appendix: The full data set
+
+```{r}
+library(DT)
+datatable(df[!is.na(df$text), c("created", "text", "screenName")],
+          options = list(pageLength = 100))
+```
+
+
