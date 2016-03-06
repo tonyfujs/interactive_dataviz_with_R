@@ -36,7 +36,7 @@ dygraph(series, main = "#eval15 tweeter trend") %>%
   dyAxis("y", label = "Number of tweets per hour")
 ```
 
-Noboday beats MQP!!    
+Nobody beats MQP!!    
 
 
 ## Where are you tweeting from?
